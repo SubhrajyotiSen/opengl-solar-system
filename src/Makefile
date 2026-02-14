@@ -5,7 +5,14 @@ CFLAGS=-I$(IDIR)
 ODIR=obj
 LDIR =../lib
 
-LIBS=-lm -lGL -lGLU -lglut
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Darwin)
+	LIBS=-framework OpenGL -framework GLUT
+	CFLAGS += -Wno-deprecated-declarations
+else
+	LIBS=-lm -lGL -lGLU -lglut
+endif
 
 _DEPS = camera.h constants.h moon.h planet.h solarsystem.h imageloader.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
@@ -25,4 +32,4 @@ solarsystem: $(OBJ)
 
 clean:
 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ solarsystem
-	rmdir obj
+	-rmdir $(ODIR)

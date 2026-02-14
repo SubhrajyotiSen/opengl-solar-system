@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include "gl_compat.h"
 #include <vector>
 
 #include "moon.h"

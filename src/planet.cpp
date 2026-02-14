@@ -1,5 +1,5 @@
 #include <cmath>
-#include <GL/glut.h>
+#include "gl_compat.h"
 
 #include "planet.h"
 #include "constants.h"

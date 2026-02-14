@@ -1,4 +1,4 @@
-#include <GL/gl.h>	
+#include "gl_compat.h"
 
 //Represents an image
 class Image {
@@ -9,7 +9,7 @@ private:
 
 public:
 	//constructor
-	Image(char* path);
+	Image(const char* path);
 
 	// returns the id of the generated texture
 	GLuint getTextureID();

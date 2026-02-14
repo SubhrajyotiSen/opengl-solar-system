@@ -1,10 +1,10 @@
 #include <fstream>
-#include <GL/glut.h>
+#include "gl_compat.h"
 
 #include "imageloader.h"
 
 // class to represent an Image
-Image::Image(char* path) {
+Image::Image(const char* path) {
 
     int i;
     FILE* f = fopen(path, "rb");

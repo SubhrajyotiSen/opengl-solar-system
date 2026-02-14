@@ -1,6 +1,7 @@
 #include <cmath>
 #include <cstdlib>
-#include <GL/glut.h>
+#include <cstdio>
+#include "gl_compat.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -25,7 +26,7 @@ SolarSystem solarSystem;
 
 Camera camera;
 
-double time;
+double simTime;
 double timeSpeed;
 
 int flag;
@@ -33,6 +34,14 @@ int flag;
 bool isPlaying = false;
 
 char str[100];
+
+#ifdef __APPLE__
+const char* kAudioPlayPrefix = "afplay ";
+const char* kAudioStopCmd = "pkill afplay";
+#else
+const char* kAudioPlayPrefix = "aplay ";
+const char* kAudioStopCmd = "pkill aplay";
+#endif
 
 struct ControlStates {
 	bool forward, backward, left, right, turnLeft, turnRight, lookUp,
@@ -127,7 +136,7 @@ void init(void) {
 
 	solarSystem.addMoon(3, 7000000, 27.3, 27.3, 1738, moon->getTextureID()); 
 
-	time = 2.552f;
+	simTime = 2.552f;
 	timeSpeed = 0.1f;
 	
 	controls.forward = false;
@@ -184,31 +193,31 @@ void drawStarBox(void) {
 void selectPlanet() {
 	switch(planetSelected) {
 		case 0: glBindTexture(GL_TEXTURE_2D, sunInfo->getTextureID());
-				strcpy(str,"aplay ../audio/sun.wav &           ");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/sun.wav");
 		break;
 		case 1: glBindTexture(GL_TEXTURE_2D, mercuryInfo->getTextureID());
-				strcpy(str,"aplay ../audio/mercury.wav &           ");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/mercury.wav");
 		break;
 		case 2: glBindTexture(GL_TEXTURE_2D, venusInfo->getTextureID());
-				strcpy(str,"aplay ../audio/venus.wav &           ");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/venus.wav");
 		break;
 		case 3: glBindTexture(GL_TEXTURE_2D, earthInfo->getTextureID());
-				strcpy(str,"aplay ../audio/earth.wav &           ");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/earth.wav");
 		break;
 		case 4: glBindTexture(GL_TEXTURE_2D, marsInfo->getTextureID());
-				strcpy(str,"aplay ../audio/mars.wav &           ");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/mars.wav");
 		break;
 		case 5: glBindTexture(GL_TEXTURE_2D, jupiterInfo->getTextureID());
-				strcpy(str,"aplay ../audio/jupiter.wav &           ");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/jupiter.wav");
 		break;
 		case 6: glBindTexture(GL_TEXTURE_2D, saturnInfo->getTextureID());
-				strcpy(str,"aplay ../audio/saturn.wav &           ");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/saturn.wav");
 		break;
 		case 7: glBindTexture(GL_TEXTURE_2D, uranusInfo->getTextureID());
-				strcpy(str,"aplay ../audio/uranus.wav &           ");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/uranus.wav");
 		break;
 		case 8: glBindTexture(GL_TEXTURE_2D, neptuneInfo->getTextureID());
-				strcpy(str,"aplay ../audio/neptune.wav &           ");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/neptune.wav");
 		break;
 
 	}
@@ -216,8 +225,8 @@ void selectPlanet() {
 
 void display() {
 	
-	time += timeSpeed;
-	solarSystem.calculatePositions(time);
+	simTime += timeSpeed;
+	solarSystem.calculatePositions(simTime);
 
 	if (controls.forward) camera.forward();		if (controls.backward) camera.backward();
 	if (controls.left) camera.left();			if (controls.right) camera.right();
@@ -270,14 +279,14 @@ void display() {
 			glTexCoord2f(1.0f, 1.0f);	glVertex2f(912.0f, 200.0f);
 		glEnd();
 		if(flag++==1) {
-			system("pkill aplay");
+			system(kAudioStopCmd);
 			system(str);
 			isPlaying = true;
 		}
 	}
 	else {
 		if(isPlaying){
-			system("pkill aplay");
+			system(kAudioStopCmd);
 			isPlaying = false;
 		}
 	}	
@@ -344,7 +353,7 @@ void keyDown(unsigned char key, int x, int y) {
 		controls.turnRight = true;
 		break;
 	case 27:
-        system("pkill aplay");
+		system(kAudioStopCmd);
 		exit(0);
 		break;
 	case 'b':

@@ -1,4 +1,4 @@
-#include <GL/glut.h>
+#include "gl_compat.h"
 #include <cmath>
 
 #include "camera.h"

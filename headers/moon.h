@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include "gl_compat.h"
 
 // classs to represent a moon
 class Moon
