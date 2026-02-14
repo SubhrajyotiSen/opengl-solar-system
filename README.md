@@ -16,13 +16,11 @@ Authors:
 Notes:
 - The app opens in fullscreen.
 - Planet narration audio uses `afplay` on macOS.
-- Audio `.wav` files are already included in `audio/`, so `sounds.sh` is optional.
+- Audio `.mp3` files are included in `audio/`.
 
 ### Linux (original setup)
 
 ```bash
-sh sounds.sh
-cd src
 make
-./solarsystem
+make run
 ```

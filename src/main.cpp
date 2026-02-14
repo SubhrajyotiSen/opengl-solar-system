@@ -39,8 +39,8 @@ char str[100];
 const char* kAudioPlayPrefix = "afplay ";
 const char* kAudioStopCmd = "pkill afplay";
 #else
-const char* kAudioPlayPrefix = "aplay ";
-const char* kAudioStopCmd = "pkill aplay";
+const char* kAudioPlayPrefix = "ffplay -nodisp -autoexit -loglevel quiet ";
+const char* kAudioStopCmd = "pkill ffplay";
 #endif
 
 struct ControlStates {
@@ -193,31 +193,31 @@ void drawStarBox(void) {
 void selectPlanet() {
 	switch(planetSelected) {
 		case 0: glBindTexture(GL_TEXTURE_2D, sunInfo->getTextureID());
-				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/sun.wav");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/sun.mp3");
 		break;
 		case 1: glBindTexture(GL_TEXTURE_2D, mercuryInfo->getTextureID());
-				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/mercury.wav");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/mercury.mp3");
 		break;
 		case 2: glBindTexture(GL_TEXTURE_2D, venusInfo->getTextureID());
-				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/venus.wav");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/venus.mp3");
 		break;
 		case 3: glBindTexture(GL_TEXTURE_2D, earthInfo->getTextureID());
-				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/earth.wav");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/earth.mp3");
 		break;
 		case 4: glBindTexture(GL_TEXTURE_2D, marsInfo->getTextureID());
-				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/mars.wav");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/mars.mp3");
 		break;
 		case 5: glBindTexture(GL_TEXTURE_2D, jupiterInfo->getTextureID());
-				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/jupiter.wav");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/jupiter.mp3");
 		break;
 		case 6: glBindTexture(GL_TEXTURE_2D, saturnInfo->getTextureID());
-				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/saturn.wav");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/saturn.mp3");
 		break;
 		case 7: glBindTexture(GL_TEXTURE_2D, uranusInfo->getTextureID());
-				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/uranus.wav");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/uranus.mp3");
 		break;
 		case 8: glBindTexture(GL_TEXTURE_2D, neptuneInfo->getTextureID());
-				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/neptune.wav");
+				snprintf(str, sizeof(str), "%s%s &", kAudioPlayPrefix, "../audio/neptune.mp3");
 		break;
 
 	}
